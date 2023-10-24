@@ -1,0 +1,30 @@
+def vigenere_encrypt_decrypt(input_text, key, mode):
+    key_length = len(key)
+    key_as_int = [ord(i) for i in key]
+    input_text_as_int = [ord(i) for i in input_text]
+    output_text = ''
+    for i in range(len(input_text)):
+        value = (
+            input_text_as_int[i] + key_as_int[i % key_length]
+        ) % 26 if mode == 'encrypt' else (
+            input_text_as_int[i] - key_as_int[i % key_length]
+        ) % 26
+        output_text += chr(value + 65)
+    return output_text
+
+def main():
+    message = input("Insira a palavra: ").upper()
+    key = input("Insira a chave: ").upper()
+    mode = input("Você deseja criptografar ou descriptografar? (c/d): ").strip().lower()
+    if mode == 'c':
+        mode = 'encrypt'
+    elif mode == 'd':
+        mode = 'decrypt'
+    else:
+        print("Entrada inválida. Por favor, insira 'c' para criptografar ou 'd' para descriptografar.")
+        return
+    result = vigenere_encrypt_decrypt(message, key, mode)
+    print(f'Resultado: {result}')
+
+if __name__ == "__main__":
+    main()
